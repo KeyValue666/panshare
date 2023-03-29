@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panshare.manager.mapper.NoticeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.panshare.manager.pojo.Notice">
+        <id column="notice_id" property="noticeId" />
+        <result column="notice_title" property="noticeTitle" />
+        <result column="notice_content" property="noticeContent" />
+        <result column="notice_time" property="noticeTime" />
+        <result column="notice_delete" property="noticeDelete" />
+        <result column="notice_is_top" property="noticeIsTop" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        notice_id, notice_title, notice_content, notice_time, notice_delete, notice_is_top
+    </sql>
+
+</mapper>

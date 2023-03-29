@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panshare.manager.mapper.IconMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.panshare.manager.pojo.Icon">
+        <id column="icon_id" property="iconId" />
+        <result column="icon_class" property="iconClass" />
+        <result column="icon_delete" property="iconDelete" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        icon_id, icon_class, icon_delete
+    </sql>
+
+</mapper>

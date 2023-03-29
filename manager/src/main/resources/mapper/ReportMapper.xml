@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panshare.manager.mapper.ReportMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.panshare.manager.pojo.Report">
+        <id column="report_id" property="reportId"/>
+        <result column="report_from_id" property="reportFromId"/>
+        <result column="report_type" property="reportType"/>
+        <result column="report_content_type" property="reportContentType"/>
+        <result column="report_time" property="reportTime"/>
+        <result column="report_user_id" property="reportUserId"/>
+        <result column="report_is_finish" property="reportIsFinish"/>
+        <result column="report_info" property="reportInfo"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        report_id, report_from_id, report_type, report_content_type, report_time, report_user_id, report_is_finish, report_info
+    </sql>
+    <select id="queryReport" resultType="com.panshare.manager.vo.ReportVO">
+        SELECT
+            r.report_id AS reportId,
+            r.report_from_id AS reportFromId,
+            r.report_type AS reportType,
+            u.user_email AS reportUserEmail,
+            r.report_content_type AS reportContentType,
+            r.report_is_finish AS reportStatue,
+            DATE_FORMAT(r.report_time, '%Y-%m-%d %k:%i') AS reportTime,
+            r.report_info AS reportInfo,
+            r.report_user_id AS reportUserId
+        FROM report r
+        LEFT JOIN `user` u
+        ON r.report_user_id=u.user_id
+        ORDER BY r.report_is_finish ASC,r.report_time DESC
+    </select>
+
+</mapper>

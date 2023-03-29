@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panshare.client.mapper.ReportMapper">
+
+    <insert id="saveReport">
+        INSERT INTO report(report_from_id,report_type,report_content_type,report_user_id,report_info)
+        VALUES (
+            #{reportFromId},
+            #{reportType},
+            #{reportContentType},
+            #{reportUserId},
+            #{reportInfo}
+        )
+    </insert>
+</mapper>

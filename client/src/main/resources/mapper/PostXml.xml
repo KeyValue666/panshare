@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panshare.client.mapper.PostMapper">
+    <insert id="savePost" useGeneratedKeys="true" keyColumn="post_id" keyProperty="postId">
+        INSERT INTO post ( post_user_id, post_tag_id, post_content, post_title )
+        VALUES (#{postDTO.userId},#{postDTO.postTagId},#{postDTO.postContent},#{postDTO.postTitle})
+    </insert>
+
+    <select id="getPostByTagId" resultType="com.panshare.client.dvo.PostVO">
+        SELECT
+        p.post_id AS postId,
+        p.post_title AS postTitle,
+        p.post_user_id AS postUserId,
+        DATE_FORMAT(p.post_time, '%Y-%m-%d %k:%i') AS postTime,
+        p.post_is_top AS postIsTop,
+        IFNULL( c.post_count, 0 ) AS postCommentCount,
+        u.user_id AS userId,
+        u.user_name AS userName,
+        u.user_avatar AS userAvatar,
+        t.tag_name AS tagName,
+        t.tag_icon AS tagIcon,
+        t.tag_color AS tagColor
+        FROM
+        post p
+        RIGHT JOIN `user` u ON p.post_user_id = u.user_id
+        RIGHT JOIN tags t ON p.post_tag_id=t.tag_id
+        LEFT JOIN ( SELECT comment_post_id, COUNT( 1 ) AS post_count FROM `comment` GROUP BY comment_post_id ) c ON
+        c.comment_post_id = p.post_id
+        <choose>
+            <when test="tagId!=1">
+                WHERE p.post_id!='' AND p.post_tag_id = #{tagId} AND p.post_delete != 1
+                ORDER BY p.post_is_top DESC,
+                <choose>
+                    <when test="sortWays==0">
+                        p.post_time DESC
+                    </when>
+                    <when test="sortWays==1">
+                        c.post_count DESC
+                    </when>
+                    <otherwise>
+                        p.post_time ASC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                WHERE p.post_id!='' AND p.post_delete != 1
+                ORDER BY p.post_is_top DESC,c.post_count DESC
+            </otherwise>
+        </choose>
+    </select>
+    <select id="getPostById" resultType="com.panshare.client.dvo.PostDetailVO">
+    SELECT
+        p.post_title AS postTitle,
+        t.tag_id AS tagId,
+        t.tag_name AS tagName,
+        t.tag_icon AS tagIcon,
+        t.tag_color AS tagColor
+    FROM
+        post p
+    LEFT JOIN tags t ON p.post_tag_id = t.tag_id
+    WHERE
+        p.post_id =#{postId} AND p.post_delete != 1
+    </select>
+    <select id="getPostContentById" resultType="com.panshare.client.dvo.PostContentVO">
+    SELECT
+        u.user_id AS userId,
+        u.user_name AS userName,
+        u.user_avatar AS userAvatar,
+        p.post_id AS postId,
+        p.post_content AS postContent,
+        DATE_FORMAT(p.post_time, '%Y-%m-%d %k:%i') AS postTime,
+        p.post_like AS postLike
+    FROM post p
+    LEFT JOIN `user` u
+        ON p.post_user_id=u.user_id
+    WHERE p.post_id=#{postId} AND p.post_delete != 1
+    </select>
+    <select id="queryPostByUserId" resultType="com.panshare.client.dvo.PostVO">
+    SELECT
+        p.post_id AS postId,
+        p.post_title AS postTitle,
+        p.post_user_id AS postUserId,
+        DATE_FORMAT(p.post_time,'%Y-%m-%d %k:%i') AS postTime,
+        p.post_is_top AS postIsTop,
+        IFNULL( c.post_count, 0 ) AS postCommentCount,
+        u.user_id AS userId,
+        u.user_name AS userName,
+        u.user_avatar AS userAvatar,
+        t.tag_name AS tagName,
+        t.tag_icon AS tagIcon,
+        t.tag_color AS tagColor
+    FROM
+        post p
+        RIGHT JOIN `user` u ON p.post_user_id = u.user_id
+        RIGHT JOIN tags t ON p.post_tag_id=t.tag_id
+        LEFT JOIN ( SELECT comment_post_id, COUNT( 1 ) AS post_count FROM `comment` GROUP BY comment_post_id ) c ON c.comment_post_id = p.post_id
+    WHERE
+        u.user_id = #{userId} AND p.post_delete != 1
+    ORDER BY
+        p.post_is_top DESC,
+        p.post_time DESC,
+        c.post_count DESC
+    </select>
+</mapper>

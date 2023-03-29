@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panshare.client.mapper.CommentMapper">
+    <insert id="saveComment">
+        INSERT INTO comment(comment_post_id,comment_user_id,comment_content)
+        VALUES (#{commentDTO.postId},#{commentDTO.userId},#{commentDTO.commentContent})
+    </insert>
+
+    <select id="getPostCommentById" resultType="com.panshare.client.dvo.PostCommentVO">
+    SELECT
+        c.comment_id AS commentId,
+        c.comment_like AS commentLike,
+        c.comment_content AS commentContent,
+        c.comment_date AS commentTime,
+        u.user_id AS userId,
+        u.user_avatar AS userAvatar,
+        u.user_name AS userName
+    FROM
+        `comment` c
+        LEFT JOIN `user` u ON c.comment_user_id = u.user_id
+    WHERE
+        c.comment_post_id = #{postId}
+        AND c.comment_delete =0
+    </select>
+    <select id="getUserComment" resultType="com.panshare.client.dvo.PostCommentVO">
+        SELECT
+        c.comment_id AS commentId,
+        c.comment_post_id AS postId,
+        c.comment_like AS commentLike,
+        c.comment_content AS commentContent,
+        DATE_FORMAT(c.comment_date, '%Y-%m-%d %k:%i') AS commentTime,
+        u.user_id AS userId,
+        u.user_avatar AS userAvatar,
+        u.user_name AS userName
+    FROM
+        `comment` c
+        LEFT JOIN `user` u ON c.comment_user_id = u.user_id
+    WHERE
+        u.user_id=#{userId}
+        AND u.user_delete = 0
+        AND c.comment_delete =0
+    </select>
+</mapper>

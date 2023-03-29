@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panshare.client.mapper.UserMapper">
+
+    <select id="selectUserDetailById" resultType="com.panshare.client.dvo.UserDetailVO">
+        SELECT
+            u.user_id AS userId,
+            u.user_name AS userName,
+            u.user_avatar AS userAvatar,
+            DATE_FORMAT(u.user_registry_time, '%Y-%m-%d %k:%i') AS userRegisterDate,
+            IFNULL(p.user_post,0) AS userPost,
+	        IFNULL(c.user_reply,0) AS userReply
+        FROM
+            `user` u
+        LEFT JOIN ( SELECT post_user_id, COUNT( 1 ) AS user_post FROM post WHERE post_delete!=1 GROUP BY post_user_id ) p ON p.post_user_id = u.user_id
+        LEFT JOIN ( SELECT comment_user_id, COUNT( 1 ) AS user_reply FROM `comment` WHERE comment_delete!=1 GROUP BY comment_user_id ) c ON c.comment_user_id = u.user_id
+        WHERE
+            u.user_id = #{userId}
+            AND u.user_delete = 0;
+    </select>
+</mapper>

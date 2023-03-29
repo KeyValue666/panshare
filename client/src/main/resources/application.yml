@@ -1,0 +1,57 @@
+server:
+  port: 8888
+spring:
+  profiles:
+    active: pro
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  redis:
+    port: 6379
+    host: localhost
+    database: 0
+    lettuce:
+      pool:
+        max-active: 8 #最大连接
+        min-idle: 0 #最小空闲连接
+        max-idle: 8 #最大空闲连接
+        max-wait: 100 #连接等待时间
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    protocol: smtp
+    username: key.value@qq.com
+    password: ypbwkbkinraidffb
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+    port: 465
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 50MB
+  elasticsearch:
+    rest:
+      uris: http://8.130.72.17:9200
+  banner:
+    location: static/banner.txt
+mybatis-plus:
+  #  configuration:
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:/mapper/*.xml
+qiniu:
+  accessKey: 9mfeXiIntf9XFesh924dapdUb0q6gLxAv39eqTKY
+  accessSecretKey: ABl_EhT2s8HIsDwIXx07OI__xo9Y8t92BjyhJR6n
+  bucket: panshare
+  imageUrl: http://rrcj472zm.sabkt.gdipper.com/
+  style: ?imageMogr2/thumbnail/960x/gravity/NorthWest/crop/960x/blur/1x0/quality/75|watermark/2/text/572R55uY5bCP56uZ/font/6buR5L2T/fontsize/800/fill/IzdENzI3Mg==/dissolve/57/gravity/Center/dx/10/dy/10
+

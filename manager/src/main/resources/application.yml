@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: pro
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  main:
+    banner-mode: 'OFF'
+server:
+  port: 9999
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panshare.manager.mapper.PostMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.panshare.manager.pojo.Post">
+        <id column="post_id" property="postId"/>
+        <result column="post_user_id" property="postUserId"/>
+        <result column="post_title" property="postTitle"/>
+        <result column="post_content" property="postContent"/>
+        <result column="post_tag_id" property="postTagId"/>
+        <result column="post_time" property="postTime"/>
+        <result column="post_like" property="postLike"/>
+        <result column="post_delete" property="postDelete"/>
+        <result column="post_is_top" property="postIsTop"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        post_id, post_user_id, post_title, post_content, post_tag_id, post_time, post_like, post_delete, post_is_top
+    </sql>
+    <select id="queryByCondition" resultType="com.panshare.manager.vo.PostVO">
+    SELECT
+        p.post_id AS postId,
+        p.post_title AS postTitle,
+        DATE_FORMAT(p.post_time, '%Y-%m-%d %k:%i') AS postDate,
+        p.post_is_top AS postState,
+        p.post_like AS postLike,
+        t.tag_name AS tagName,
+        t.tag_icon AS tagIcon
+    FROM
+        post p
+        LEFT JOIN tags t ON p.post_tag_id = t.tag_id
+    WHERE
+        p.post_delete = 0
+        AND p.post_title LIKE concat('%',#{queryCondition.condition},'%')
+    ORDER BY p.post_time DESC
+    </select>
+    <update id="deleteBatch">
+        UPDATE post
+        SET post_delete=1
+        WHERE post_id
+        IN
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </update>
+
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panshare.manager.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.panshare.manager.pojo.User">
+        <id column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="user_email" property="userEmail" />
+        <result column="user_password" property="userPassword" />
+        <result column="user_avatar" property="userAvatar" />
+        <result column="user_registry_time" property="userRegistryTime" />
+        <result column="user_delete" property="userDelete" />
+        <result column="user_ban" property="userBan" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, user_name, user_email, user_password, user_avatar, user_registry_time, user_delete, user_ban
+    </sql>
+    <select id="queryByCondition" resultType="com.panshare.manager.vo.UserVO">
+        SELECT
+            u.user_id AS userId,
+            u.user_name AS userName,
+            u.user_avatar AS userAvatar,
+            u.user_email AS userEmail,
+            DATE_FORMAT(u.user_registry_time, '%Y-%m-%d %k:%i') AS userRegistry,
+            u.user_ban AS userState,
+            u.user_delete AS userDelete,
+            u.user_ip AS userIp,
+            u.user_ip_info AS userIpInfo
+        FROM `user` u
+        WHERE u.user_name LIKE concat('%',#{condition},'%')
+        ORDER BY u.user_delete ASC, u.user_registry_time DESC
+    </select>
+
+</mapper>
