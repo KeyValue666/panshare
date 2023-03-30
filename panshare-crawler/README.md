@@ -2,7 +2,7 @@
 
 ## 爬虫模块逻辑图
 
-![image-20230325221950966](C:\Users\27643\AppData\Roaming\Typora\typora-user-images\image-20230325221950966.png)
+![image-20230325221950966](../img/image-20230325221950966.png)
 
 >   流程如下
 >
