@@ -2,7 +2,7 @@
 *.iws
 *.iml
 *.ipr
-
+mvnw.*
  
 # Maven
 log/
