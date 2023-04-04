@@ -1,8 +1,8 @@
 # 网盘分享小站模块简介
 
-`项目演示地址:http://8.130.72.17/	测试账号：62643349@qq.com	密码：123456`
+`项目演示地址:http://panshare.top/	测试账号：62643349@qq.com	密码：123456`
 
-`后台演示地址：http://8.130.72.17:8080/	测试账号：admin 密码：123456`
+`后台演示地址：http://manager.panshare.top/	测试账号：admin 密码：123456`
 
 `前端项目地址：https://gitee.com/hjs-creat/pan-share`
 
