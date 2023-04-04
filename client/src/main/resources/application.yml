@@ -19,8 +19,8 @@ spring:
     default-encoding: UTF-8
     host: smtp.qq.com
     protocol: smtp
-    username: key.value@qq.com
-    password: ypbwkbkinraidffb
+    username: ******@qq.com
+    password: ******
     test-connection: true
     properties:
       mail:
@@ -41,7 +41,7 @@ spring:
       max-request-size: 50MB
   elasticsearch:
     rest:
-      uris: http://8.130.72.17:9200
+      uris: http://localhost:9200
   banner:
     location: static/banner.txt
 mybatis-plus:
@@ -49,8 +49,8 @@ mybatis-plus:
   #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:/mapper/*.xml
 qiniu:
-  accessKey: 9mfeXiIntf9XFesh924dapdUb0q6gLxAv39eqTKY
-  accessSecretKey: ABl_EhT2s8HIsDwIXx07OI__xo9Y8t92BjyhJR6n
+  accessKey: HJS9mfeXiIntf9XFesh924dapdUb0q6gLxAv39eqTKY
+  accessSecretKey: ABl_EhT2s8HIsDwIXx07OI__xo9Y8t92BjyhJR6nHJS
   bucket: panshare
   imageUrl: http://rrcj472zm.sabkt.gdipper.com/
   style: ?imageMogr2/thumbnail/960x/gravity/NorthWest/crop/960x/blur/1x0/quality/75|watermark/2/text/572R55uY5bCP56uZ/font/6buR5L2T/fontsize/800/fill/IzdENzI3Mg==/dissolve/57/gravity/Center/dx/10/dy/10
