@@ -19,8 +19,8 @@ spring:
     default-encoding: UTF-8
     host: smtp.sina.com
     protocol: smtp
-    username: alexlqx@sina.com
-    password: 65d0ee3a806ff5ff
+    username: yours
+    password: yours
     test-connection: true
     properties:
       mail:
@@ -49,9 +49,9 @@ mybatis-plus:
   #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:/mapper/*.xml
 qiniu:
-  accessKey: NgMnv_zmPcCsmpDvfGOo7LGzKqz9ndiGPkvMZodp
-  accessSecretKey: CPqaGPETUDe3RZsNYq3RQs-_JUrC2ZScrXRDEhe8
-  bucket: zhiwenplatform
-  imageUrl: http://sd3r459r9.hd-bkt.clouddn.com/
-  style: ?imageMogr2/thumbnail/960x/gravity/NorthWest/crop/960x/blur/1x0/quality/75|watermark/2/text/572R55uY5bCP56uZ/font/6buR5L2T/fontsize/800/fill/IzdENzI3Mg==/dissolve/57/gravity/Center/dx/10/dy/10
+  accessKey: yours
+  accessSecretKey: yours
+  bucket: yours
+  imageUrl: yours
+  style: yours
 
