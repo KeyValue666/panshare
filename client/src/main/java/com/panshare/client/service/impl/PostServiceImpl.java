@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.panshare.client.common.R;
+import com.panshare.client.common.SensitiveWordFilter;
 import com.panshare.client.dto.PostDTO;
 import com.panshare.client.dvo.PostContentVO;
 import com.panshare.client.dvo.PostDetailVO;
@@ -25,6 +26,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotBlank;
+
 import static javafx.beans.binding.Bindings.select;
 
 @Service
@@ -37,6 +40,8 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     private RedisUtils redisUtils;
     @Autowired
     private LikeService likeService;
+    @Autowired
+    private SensitiveWordFilter sensitiveWordFilter;
 
     @Override
     public R listPost(Integer tagId, Integer sortWays, Integer page, Integer pageSize) {
@@ -63,7 +68,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         return R.ok().data("post", postContentVO);
     }
 
-    @Override // com.hjs.panshare.service.PostService
+    @Override
     public R getUserPost(Integer userId, Integer page, Integer pageSize) {
         PageHelper.startPage(page.intValue(), pageSize.intValue());
         List<PostVO> list = this.postMapper.queryPostByUserId(userId);
@@ -81,11 +86,13 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             return R.error().message("你已被系统禁言，如有异议请联系管理员！");
         }
         postDTO.setUserId(userId);
+        String postContent = postDTO.getPostContent();
+        postDTO.setPostContent(sensitiveWordFilter.filterSensitiveWords(postContent));//敏感词过滤
         this.postMapper.savePost(postDTO);
         return R.ok().data("postId", postDTO.getPostId());
     }
 
-    @Override // com.hjs.panshare.service.PostService
+    @Override
     public R deleteByUser(Integer postId) {
         Integer userId = ThreadLocalUtil.get();
         QueryWrapper<Post> queryWrapper = new QueryWrapper<>();

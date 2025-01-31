@@ -4,7 +4,6 @@ import com.panshare.client.dvo.PostCommentVO;
 import com.panshare.client.dvo.PostContentVO;
 import java.util.List;
 
-/* loaded from: LikeService.class */
 public interface LikeService {
     void likeInitComment(List<PostCommentVO> list);
 

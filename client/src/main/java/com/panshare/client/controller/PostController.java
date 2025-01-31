@@ -1,5 +1,6 @@
 package com.panshare.client.controller;
 
+import com.panshare.client.common.Limit;
 import com.panshare.client.common.R;
 import com.panshare.client.dto.PostDTO;
 import com.panshare.client.pojo.Post;
@@ -56,6 +57,7 @@ public class PostController {
     }
 
     @PostMapping({"upload"})
+    @Limit(limit = 4, interval = 5)
     public R uploadPost(@Valid @RequestBody PostDTO postDTO) {
         return this.postService.upload(postDTO);
     }

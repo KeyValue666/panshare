@@ -4,6 +4,7 @@ package com.panshare.client;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.panshare.client.common.SensitiveWordFilter;
 import com.panshare.client.mapper.UserMapper;
 import com.panshare.client.pojo.Post;
 import com.panshare.client.pojo.User;
@@ -47,6 +48,8 @@ public class Demo {
     private UserMapper userMapper;
     @Autowired
     private PostService postService;
+    @Autowired
+    private SensitiveWordFilter sensitiveWordFilter;
 
     @Test//添加索引
     public void addIndex() throws IOException {
@@ -62,6 +65,12 @@ public class Demo {
         String json = JSONUtil.toJsonStr(user);
         request.source(json, XContentType.JSON);
         client.index(request, RequestOptions.DEFAULT);
+    }
+
+    @Test
+    public void demo() {
+        String s = sensitiveWordFilter.filterSensitiveWords("吸毒不好！");
+        System.out.println(s);
     }
 
     @Test//批量插入

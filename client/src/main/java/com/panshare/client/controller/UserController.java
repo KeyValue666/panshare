@@ -1,5 +1,6 @@
 package com.panshare.client.controller;
 
+import com.panshare.client.common.Limit;
 import com.panshare.client.common.R;
 import com.panshare.client.dto.LoginTO;
 import com.panshare.client.dto.RegistryFormTO;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.concurrent.TimeUnit;
+
 @RequestMapping({"/user/"})
 @RestController
 @Validated
@@ -39,6 +42,7 @@ public class UserController {
     }
 
     @PostMapping({"registry"})
+    @Limit(limit = 10, interval = 5)
     public R registry(@Valid @RequestBody RegistryFormTO registryFormTO) {
         log.info("{}", registryFormTO);
         boolean res = this.userService.userRegistry(registryFormTO);

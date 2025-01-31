@@ -5,7 +5,6 @@ import com.panshare.client.common.R;
 import com.panshare.client.dto.PostDTO;
 import com.panshare.client.pojo.Post;
 
-/* loaded from: PostService.class */
 public interface PostService extends IService<Post> {
     R listPost(Integer tagId, Integer sortWays, Integer page, Integer pageSize);
 

@@ -45,13 +45,13 @@ public class ImgUtils {
             String originalFilename = multipartFile.getOriginalFilename();
             String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
             String filename = file + suffix;
-            Configuration cfg = new Configuration(Region.xinjiapo());
+            Configuration cfg = new Configuration(Region.huadong());
             UploadManager uploadManager = new UploadManager(cfg);
             Auth auth = Auth.create(this.accessKey, this.accessSecretKey);
             String upToken = auth.uploadToken(this.bucket);
             uploadManager.put(fileBytes, filename, upToken);
             String imgUrl=url+filename;
-            return isDiv ? imgUrl + this.style : imgUrl;
+            return isDiv ? imgUrl +this.style : imgUrl;
         } catch (IOException e) {
             e.printStackTrace();
             return null;

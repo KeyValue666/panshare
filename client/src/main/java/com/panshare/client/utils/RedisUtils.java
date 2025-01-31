@@ -25,6 +25,14 @@ public class RedisUtils {
         this.redisTemplate.opsForValue().set(key, s, expire, timeUnit);
     }
 
+    public void setex(String key, Object value, long expire, TimeUnit timeUnit) {
+        redisTemplate.opsForValue().set(key, value + "", expire, timeUnit);
+    }
+
+    public void incr(String key) {
+        redisTemplate.opsForValue().increment(key);
+    }
+
     public void del(String key) {
         this.redisTemplate.delete(key);
     }

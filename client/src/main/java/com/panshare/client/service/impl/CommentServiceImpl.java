@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.panshare.client.common.R;
+import com.panshare.client.common.SensitiveWordFilter;
 import com.panshare.client.dto.CommentDTO;
 import com.panshare.client.dvo.PostCommentVO;
 import com.panshare.client.mapper.CommentMapper;
@@ -33,6 +34,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     private UserMapper userMapper;
     @Autowired
     private LikeService likeService;
+    @Autowired
+    private SensitiveWordFilter sensitiveWordFilter;
 
     @Override
     public R commentList(Integer postId, Integer page, Integer pageSize) {
@@ -47,7 +50,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         PageHelper.startPage(page, pageSize);
         List<PostCommentVO> list = commentMapper.getUserComment(userId);
         for (PostCommentVO commentVO : list) {
-            String content = Html2Text.getContent(commentVO.getCommentContent());
+            String content = Html2Text.getContent(commentVO.getCommentContent());//文本转字符串
+            content = sensitiveWordFilter.filterSensitiveWords(content);//敏感词过滤
             commentVO.setCommentContent(content);
         }
         Map<String, Object> map = commentPage(list);
